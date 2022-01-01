@@ -19,13 +19,11 @@ set -o pipefail
 # trace what gets executed.
 set -o xtrace
 
-readonly TARGET_HOST=kali@192.168.100.2
+readonly TARGET_HOST=rpi
 readonly TARGET_PATH=/home/kali/ws/hello-rpi
-# readonly TARGET_ARCH=armv7-unknown-linux-gnueabihf
 readonly TARGET_ARCH=aarch64-unknown-linux-gnu
 readonly SOURCE_PATH=./target/${TARGET_ARCH}/release/hello-rpi
 
 cargo build --release --target=${TARGET_ARCH}
-# rsync -Pav -e "ssh -i ~/.ssh/rpi" ${SOURCE_PATH} ${TARGET_HOST}:${TARGET_PATH}
 rsync ${SOURCE_PATH} ${TARGET_HOST}:${TARGET_PATH}
-ssh -t ${TARGET_HOST} ${TARGET_PATH}
+ssh -v -t ${TARGET_HOST} sudo systemctl restart hello-rpi.service

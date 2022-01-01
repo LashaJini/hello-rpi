@@ -7,7 +7,7 @@ async fn greet(req: HttpRequest) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Hello, from RPI!");
+    println!("Hello, from RPI! :)");
     HttpServer::new(|| {
         App::new()
             .route("/", web::get().to(greet))
